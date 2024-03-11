@@ -12,16 +12,46 @@ public class Box {
     }
 
     public void assignarPacient(Pacient pacient) {
-        this.pacientActual = pacient;
-        this.ocupat = true;
-        // Logica per començar l'atenció
+        if (!ocupat) {
+            this.pacientActual = pacient;
+            this.ocupat = true;
+            // Logica per començar l'atenció
+            System.out.println("Pacient amb identificador " + pacient.getIdentificador() + " assignat al box " + identificador + ".");
+        } else {
+            System.out.println("Box " + identificador + " ja està ocupat.");
+        }
     }
 
     public void alliberarBox() {
-        this.pacientActual = null;
-        this.ocupat = false;
-        // Netegem l'estat per un nou pacient
+        if (ocupat) {
+            System.out.println("Pacient amb identificador " + pacientActual.getIdentificador() + " ha estat alliberat del box " + identificador + ".");
+            this.pacientActual = null;
+            this.ocupat = false;
+            // Netegem l'estat per un nou pacient
+        } else {
+            System.out.println("Box " + identificador + " ja està buit.");
+        }
     }
 
-    // Getters i setters segons sigui necessari
+    // Getters
+    public String getIdentificador() {
+        return identificador;
+    }
+
+    public boolean isOcupat() {
+        return ocupat;
+    }
+
+    public Pacient getPacientActual() {
+        return pacientActual;
+    }
+
+    // Setters
+    public void setOcupat(boolean ocupat) {
+        this.ocupat = ocupat;
+    }
+
+    public void setPacientActual(Pacient pacientActual) {
+        this.pacientActual = pacientActual;
+    }
 }
