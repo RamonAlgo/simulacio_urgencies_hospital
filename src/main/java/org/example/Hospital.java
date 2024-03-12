@@ -9,14 +9,19 @@ public class Hospital {
     private String nom;
     private List<Box> boxes;
     private Queue<Pacient> salaEspera;
+    private List<TecnicSanitari> tecnicsSanitaris;
+    private List<Especialista> especialistes;
 
     public Hospital(String nom, int nombreDeBoxes) {
         this.nom = nom;
         this.boxes = new ArrayList<>();
+        this.tecnicsSanitaris = new ArrayList<>();
+        this.especialistes = new ArrayList<>();
+        this.salaEspera = new LinkedList<>();
         for (int i = 0; i < nombreDeBoxes; i++) {
             this.boxes.add(new Box("Box " + (i + 1)));
         }
-        this.salaEspera = new LinkedList<>();
+
     }
 
     public void admetrePacient(Pacient pacient) {
@@ -49,5 +54,55 @@ public class Hospital {
         }
     }
 
+    public boolean hiHaTecnicsDisponibles() {
+        // Comprova si hi ha algun tècnic disponible
+        return tecnicsSanitaris.stream().anyMatch(TecnicSanitari::isDisponibilitat);
+    }
+
+    public TecnicSanitari obtenirTecnicDisponible() {
+        for (TecnicSanitari tecnic : tecnicsSanitaris) {
+            if (tecnic.isDisponibilitat()) {
+                tecnic.setDisponibilitat(false); // Actualitza l'estat a no disponible
+                return tecnic;
+            }
+        }
+        return null; // Si no hi ha tècnics disponibles, retorna null
+    }
+    public void afegirEspecialista(Especialista especialista) {
+        especialistes.add(especialista);
+    }
+    public Especialista obtenirEspecialistaDisponible() {
+        for (Especialista especialista : especialistes) {
+            if (especialista.isDisponibilitat()) {
+                especialista.setDisponibilitat(false); // Actualitza l'estat a no disponible
+                return especialista;
+            }
+        }
+        return null;
+    }
+    public boolean hiHaEspecialistesDisponibles() {
+        return especialistes.stream().anyMatch(Especialista::isDisponibilitat);
+    }
+
     // Getters i setters segons sigui necessari
+    public String getNom() {
+        return nom;
+    }
+
+    public List<Box> getBoxes() {
+        return boxes;
+    }
+
+    public Queue<Pacient> getSalaEspera() {
+        return salaEspera;
+    }
+
+    public List<TecnicSanitari> getTecnicsSanitaris() {
+        return tecnicsSanitaris;
+    }
+
+    public List<Especialista> getEspecialistes() {
+        return especialistes;
+    }
+// Getters i setters segons sigui necessari
 }
